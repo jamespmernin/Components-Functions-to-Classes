@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      darkMode: true,
+    };
+  }
+
+  changeMode() {
+    this.setState({ darkMode: !this.state.darkMode })
+  }
+
+  render() {
+    return (
+      <div className="app">
+        <div className={this.state.darkMode ? "dark" : "light"}>
+          <div className="glow">
+            <h1>Dragonfly Diner</h1>
+            <h2>A Classy Restaurant</h2>
+          </div>
+          <button onClick={() => this.changeMode()}>Change Mode</button>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
