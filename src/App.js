@@ -10,7 +10,13 @@ class App extends Component {
   }
 
   changeMode() {
-    this.setState({ darkMode: !this.state.darkMode })
+    //this.setState({ darkMode: !this.state.darkMode });
+    this.setState(prevState => {
+      return {
+        ...prevState,
+        darkMode: !prevState.darkMode,
+      };
+    })
   }
 
   render() {
