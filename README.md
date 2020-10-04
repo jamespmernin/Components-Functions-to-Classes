@@ -85,6 +85,18 @@ We've created a class method called `changeMode`. The purpose of this method is 
   changeMode() {
     this.setState(prevState => {
       return {
+        darkMode: !prevState.darkMode,
+      };
+    })
+  }
+```
+
+But what if you have a state that has nested objects / arrays? You can then handle it with this syntax:
+
+```js
+  changeMode() {
+    this.setState(prevState => {
+      return {
         ...prevState,
         darkMode: !prevState.darkMode,
       };
@@ -92,10 +104,9 @@ We've created a class method called `changeMode`. The purpose of this method is 
   }
 ```
 
-We're spreading out our previous state for three reasons:
-1. As learned with functional components, if we have `<React.StrictMode />` surrounding our application, React will render it twice to make sure it is properly rendered.
-2. If we don't reassign state to a new value with the callback function syntax, React won't detect that there is a new value in state.
-3. Even though we don't have anything else in our state, we're spreading out prevState so that if we add more items in state, we won't have to rewrite our function.
+We're spreading out our previous state for two reasons:
+1. As with functional components, if we have `<React.StrictMode />` surrounding our application, React will render it twice to make sure it is properly rendered.
+2. Even though we don't have anything else in our state, we're spreading out prevState so that if we add more items in state, we won't have to rewrite our function.
 
 ```jsx
   render() {
@@ -113,4 +124,24 @@ We're spreading out our previous state for three reasons:
   }
 ```
 
-`render()` is the only required method in a class component. React has configured the `Component` class so that, provided there is no state, the constructor in not necessary. All the render method must do is return some JSX for the component to display. In this case, we have a className on our div determined by `this.state.darkMode`'s value. In addition, we're using an arrow function to trigger the onClick for changeMode.
+`render()` is the only required method in a class component. React has configured the `Component` class so that, provided there is no state, the constructor in not necessary. All the render method must do is return some JSX for the component to display. In this case, we have a className on our div determined by `this.state.darkMode`'s value. 
+
+In addition, we're using an arrow function to trigger the onClick for changeMode.
+
+```jsx
+<button onClick={() => this.changeMode()}>Change Mode</button>
+```
+
+This is to make sure that the `this` context is properly bound. Another way to confirm the `this` context would be to use `.bind()` in the constructor, like so:
+
+```jsx
+constructor(props) {
+    super(props);
+    this.state = {
+      darkMode: true,
+    };
+    this.changeMode = this.changeMode.bind(this);
+  }
+```
+
+Depending on the situation, there are advantages and disadvantages to either method. While `.bind()` calls can start to clutter our `constructor`, arrow functions can add obscurity if we need to pass an argument to the function, such as `() => this.changeMode('dark')`.
