@@ -54,7 +54,7 @@ export default App;
 Let's break down what's going on here:
 
 ```js
-import React, { Component } from "react"";
+import React, { Component } from "react";
 import "./App.css";
 
 class App extends Component {
@@ -135,7 +135,7 @@ In addition, we're using an arrow function to trigger the onClick for changeMode
 This is to make sure that the `this` context is properly bound. Another way to confirm the `this` context would be to use `.bind()` in the constructor, like so:
 
 ```jsx
-constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
       darkMode: true,
